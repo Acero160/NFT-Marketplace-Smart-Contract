@@ -64,7 +64,7 @@ contract MarketPlace is Ownable (msg.sender) {
     function buyTokens (uint256 _nftID) public frontRunning(_nftID) {
         require(sales[_nftID].sale == SaleStatus.open, "Is not open");
         require(tokenERC20.transferFrom(msg.sender, sales[_nftID].owner,  sales[_nftID].price));
-        //Este contrato se lleva el 5% del token, como una comision/tasa
+        // This contract takes 5% of the token as a commission/fee.
         require(tokenERC20.transferFrom(msg.sender, address(this),  sales[_nftID].price*5/100));
 
         nft.transferFrom(sales[_nftID].owner, msg.sender, _nftID);
